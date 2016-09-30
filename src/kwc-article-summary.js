@@ -29,9 +29,9 @@
       a.appendChild(document.createTextNode(item.name));
       li.appendChild(a);
       if (item.children && item.children.length > 0) {
-        const ul = document.createElement("ol");
-        li.appendChild(ul);
-        item.children.forEach((child) => ul.appendChild(this.buildItem(child)));
+        const ol = document.createElement("ol");
+        li.appendChild(ol);
+        item.children.forEach((child) => ol.appendChild(this.buildItem(child)));
       }
       return li;
     }
