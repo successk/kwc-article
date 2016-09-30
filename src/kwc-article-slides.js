@@ -40,6 +40,14 @@
           this._pageupPressed(e);
         } else if (e.keyCode === 34) {
           this._pagedownPressed(e);
+        } else if (e.keyCode === 37) {
+          this._leftPressed(e);
+        } else if (e.keyCode === 38) {
+          this._upPressed(e);
+        } else if (e.keyCode === 39) {
+          this._rightPressed(e);
+        } else if (e.keyCode === 40) {
+          this._downPressed(e);
         }
       }, true);
     }
@@ -65,6 +73,26 @@
     }
 
     _pagedownPressed(e) {
+      e.preventDefault();
+      this._next();
+    }
+
+    _upPressed(e) {
+      e.preventDefault();
+      this._previous();
+    }
+
+    _downPressed(e) {
+      e.preventDefault();
+      this._next();
+    }
+
+    _leftPressed(e) {
+      e.preventDefault();
+      this._previous();
+    }
+
+    _rightPressed(e) {
       e.preventDefault();
       this._next();
     }
