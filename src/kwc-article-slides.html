@@ -1,0 +1,44 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="kwc-article-slides">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        width: 500px;
+      }
+
+      #slides {
+        display: flex;
+        height: 500px;
+        width: 100%;
+        margin: auto;
+        border: 1px solid #e0e0e0;
+      }
+
+      #actions {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        border-left: 1px solid transparent;
+        border-right: 1px solid transparent;
+      }
+
+      #actions button {
+        flex-grow: 1;
+      }
+    </style>
+
+    <div id="slides">
+      <content></content>
+    </div>
+    <div id="actions">
+      <button id="previous">Previous</button>
+      <button id="next">Next</button>
+    </div>
+  </template>
+
+  <script src="kwc-article-slides.js" inline></script>
+</dom-module>

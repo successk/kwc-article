@@ -1,0 +1,66 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="kwc-article-slide">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+
+      .slide {
+        width: 100%;
+        height: 100%;
+      }
+
+      .title-subtitle {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .title-subtitle ::content h1 {
+        font-size: 3rem;
+      }
+
+      .title-subtitle ::content p {
+        font-size: 2rem;
+      }
+
+      .title-content {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .title-content ::content h3 {
+        font-size: 2rem;
+      }
+
+      .title-content ::content p {
+        font-size: 1.5rem;
+      }
+    </style>
+
+    <template is="dom-if" if="[[isType(type, 'title-subtitle')]]">
+      <div class="slide title-subtitle">
+        <content select="h1"></content>
+        <content select="p"></content>
+      </div>
+    </template>
+
+    <template is="dom-if" if="[[isType(type, 'title-content')]]">
+      <div class="slide title-content">
+        <content select="h3"></content>
+        <content select="p"></content>
+      </div>
+    </template>
+  </template>
+
+  <script src="kwc-article-slide.js" inline></script>
+</dom-module>

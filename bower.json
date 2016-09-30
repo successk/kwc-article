@@ -1,0 +1,26 @@
+{
+  "name": "kwc-article",
+  "version": "1.0.0",
+  "description": "Create article for SEO and users",
+  "license": "MIT",
+  "main": "kwc-article.html",
+  "keywords": [
+    "polymer",
+    "web-component",
+    "bootstrap"
+  ],
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "homepage": "https://github.com/successk/kwc-article",
+  "authors": [
+    "Gaëtan Rizio <gaetan@rizio.fr>"
+  ]
+}
