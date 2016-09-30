@@ -6,13 +6,26 @@
       :host {
         display: flex;
         flex-direction: column;
+        background-color: #fff;
+      }
+
+      :host:not(.full-screen) {
         margin: auto;
         width: 500px;
+        height: 500px;
+      }
+
+      :host.full-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
       }
 
       #slides {
         display: flex;
-        height: 500px;
+        flex-grow: 1;
         width: 100%;
         margin: auto;
         border: 1px solid #e0e0e0;
@@ -37,6 +50,7 @@
     <div id="actions">
       <button id="previous">Previous</button>
       <button id="next">Next</button>
+      <button id="fullscreen">Full-screen</button>
     </div>
   </template>
 

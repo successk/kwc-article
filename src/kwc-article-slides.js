@@ -14,12 +14,17 @@
         start: {
           type: String,
           value: null
+        },
+        fullScreen: {
+          type: Boolean,
+          value: false
         }
       };
 
       this.listeners = {
         "previous.tap": "_previousTap",
-        "next.tap": "_nextTap"
+        "next.tap": "_nextTap",
+        "fullscreen.tap": "_fullscreenTap"
       };
     }
 
@@ -49,6 +54,11 @@
       this._next();
     }
 
+    _fullscreenTap(e) {
+      e.preventDefault();
+      this._fullScreen();
+    }
+
     _pageupPressed(e) {
       e.preventDefault();
       this._previous();
@@ -68,6 +78,29 @@
     _next() {
       if (this._currentSlide.hasAttribute("next")) {
         this.slide = this._currentSlide.getAttribute("next");
+      }
+    }
+
+    _fullScreen() {
+      const documentElement = document.documentElement;
+      if (this.classList.contains("full-screen")) {
+        this.classList.remove("full-screen");
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+        }
+      } else {
+        this.classList.add("full-screen");
+        if (documentElement.requestFullScreen) {
+          documentElement.requestFullScreen();
+        } else if (documentElement.mozRequestFullScreen) {
+          documentElement.mozRequestFullScreen();
+        } else if (documentElement.webkitRequestFullScreen) {
+          documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
       }
     }
 
