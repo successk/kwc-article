@@ -18,13 +18,18 @@
         fullScreen: {
           type: Boolean,
           value: false
+        },
+        partRelated: {
+          type: Boolean,
+          value: false
         }
       };
 
       this.listeners = {
         "previous.tap": "_previousTap",
         "next.tap": "_nextTap",
-        "fullscreen.tap": "_fullscreenTap"
+        "fullscreen.tap": "_fullscreenTap",
+        "related.tap": "_partRelatedTap"
       };
     }
 
@@ -97,6 +102,16 @@
       this._next();
     }
 
+    _partRelatedTap(e) {
+      e.preventDefault();
+      this._exitFullScreen().then(() => {
+        // We wait the end off full screen exit, otherwise the browser does not trigger "go to hash" action.
+        // We remove current hash and reset it to force "go to hash" action.
+        window.location.hash = "#";
+        window.location.hash = `#${this._currentSlide.getAttribute("part")}`;
+      });
+    }
+
     _previous() {
       if (this._currentSlide.hasAttribute("previous")) {
         this.slide = this._currentSlide.getAttribute("previous");
@@ -110,9 +125,41 @@
     }
 
     _fullScreen() {
-      const documentElement = document.documentElement;
       if (this.classList.contains("full-screen")) {
-        this.classList.remove("full-screen");
+        this._exitFullScreen();
+      } else {
+        this._enterFullScreen();
+      }
+    }
+
+    _enterFullScreen() {
+      this.classList.add("full-screen");
+      const documentElement = document.documentElement;
+      if (documentElement.requestFullScreen) {
+        documentElement.requestFullScreen();
+      } else if (documentElement.mozRequestFullScreen) {
+        documentElement.mozRequestFullScreen();
+      } else if (documentElement.webkitRequestFullScreen) {
+        documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+      }
+    }
+
+    _exitFullScreen() {
+      this.classList.remove("full-screen");
+      if (document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen) {
+        const promise = new Promise((resolve) => {
+          const handler = () => {
+            resolve();
+            document.removeEventListener("fullscreenchange", handler);
+            document.removeEventListener("webkitfullscreenchange", handler);
+            document.removeEventListener("mozfullscreenchange", handler);
+            document.removeEventListener("msfullscreenchange", handler);
+          };
+          document.addEventListener("fullscreenchange", handler);
+          document.addEventListener("webkitfullscreenchange", handler);
+          document.addEventListener("mozfullscreenchange", handler);
+          document.addEventListener("msfullscreenchange", handler);
+        });
         if (document.exitFullscreen) {
           document.exitFullscreen();
         } else if (document.mozCancelFullScreen) {
@@ -120,15 +167,9 @@
         } else if (document.webkitCancelFullScreen) {
           document.webkitCancelFullScreen();
         }
+        return promise;
       } else {
-        this.classList.add("full-screen");
-        if (documentElement.requestFullScreen) {
-          documentElement.requestFullScreen();
-        } else if (documentElement.mozRequestFullScreen) {
-          documentElement.mozRequestFullScreen();
-        } else if (documentElement.webkitRequestFullScreen) {
-          documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-        }
+        return Promise.resolve();
       }
     }
 
@@ -140,6 +181,7 @@
           slide.style.display = "none";
         }
       });
+      this.partRelated = this._currentSlide && this._currentSlide.hasAttribute("part");
     }
 
     get _currentSlide() {
