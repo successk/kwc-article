@@ -12,7 +12,6 @@
       :host:not(.full-screen) {
         margin: auto;
         width: 500px;
-        height: 500px;
       }
 
       :host.full-screen {
@@ -23,15 +22,23 @@
         right: 0;
       }
 
+      #slidesContainer {
+        flex-grow: 1;
+        display: flex;
+      }
+
       #slides {
         display: flex;
-        flex-grow: 1;
-        width: 100%;
         margin: auto;
+        width: 500px;
+        height: 500px;
+      }
+
+      :host:not(.full-screen) #slides {
         border: 1px solid #e0e0e0;
       }
 
-      #slides:focus {
+      #slidesContainer:focus {
         outline: none;
       }
 
@@ -97,8 +104,10 @@
       }
     </style>
 
-    <div id="slides" tabindex="-1">
-      <content></content>
+    <div id="slidesContainer" tabindex="-1">
+      <div id="slides">
+        <content></content>
+      </div>
     </div>
     <progress id="progress" min="0" max="[[totalSlides]]" value$="[[slideIndex]]"></progress>
     <div id="actions">

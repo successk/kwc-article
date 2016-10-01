@@ -67,6 +67,10 @@
           this._downPressed(e);
         }
       }, true);
+
+      window.addEventListener("resize", (e) => {
+        this._windowResized(e);
+      });
     }
 
     _previousTap(e) {
@@ -124,14 +128,18 @@
       });
     }
 
+    _windowResized(e) {
+      this._resize();
+    }
+
     _previous() {
       if (this._currentSlide.hasAttribute("previous")) {
         this.slide = this._currentSlide.getAttribute("previous");
       } else {
         const slides = this.querySelectorAll("kwc-article-slide");
-        for (let i = 1, c = slides.length ; i < c ; i++) {
+        for (let i = 1, c = slides.length; i < c; i++) {
           if (slides[i].getAttribute("name") === this.slide) {
-            this.slide = slides[i-1].getAttribute("name");
+            this.slide = slides[i - 1].getAttribute("name");
             break;
           }
         }
@@ -161,6 +169,7 @@
     }
 
     _enterFullScreen() {
+      this.fullScreen = true;
       this.classList.add("full-screen");
       const documentElement = document.documentElement;
       if (documentElement.requestFullScreen) {
@@ -170,24 +179,14 @@
       } else if (documentElement.webkitRequestFullScreen) {
         documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
       }
+      this._resize();
     }
 
     _exitFullScreen() {
+      this.fullScreen = false;
       this.classList.remove("full-screen");
       if (document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen) {
-        const promise = new Promise((resolve) => {
-          const handler = () => {
-            resolve();
-            document.removeEventListener("fullscreenchange", handler);
-            document.removeEventListener("webkitfullscreenchange", handler);
-            document.removeEventListener("mozfullscreenchange", handler);
-            document.removeEventListener("msfullscreenchange", handler);
-          };
-          document.addEventListener("fullscreenchange", handler);
-          document.addEventListener("webkitfullscreenchange", handler);
-          document.addEventListener("mozfullscreenchange", handler);
-          document.addEventListener("msfullscreenchange", handler);
-        });
+        const promise = this._createFullScreenChangePromise();
         if (document.exitFullscreen) {
           document.exitFullscreen();
         } else if (document.mozCancelFullScreen) {
@@ -195,9 +194,36 @@
         } else if (document.webkitCancelFullScreen) {
           document.webkitCancelFullScreen();
         }
+        this._resize();
         return promise;
       } else {
+        this._resize();
         return Promise.resolve();
+      }
+    }
+
+    _createFullScreenChangePromise() {
+      return new Promise((resolve) => {
+        const handler = () => {
+          resolve();
+          document.removeEventListener("fullscreenchange", handler);
+          document.removeEventListener("webkitfullscreenchange", handler);
+          document.removeEventListener("mozfullscreenchange", handler);
+          document.removeEventListener("msfullscreenchange", handler);
+        };
+        document.addEventListener("fullscreenchange", handler);
+        document.addEventListener("webkitfullscreenchange", handler);
+        document.addEventListener("mozfullscreenchange", handler);
+        document.addEventListener("msfullscreenchange", handler);
+      });
+    }
+
+    _resize() {
+      if (this.fullScreen) {
+        const scale = Math.min(this.$.slidesContainer.offsetWidth, this.$.slidesContainer.offsetHeight) / 500;
+        this.$.slides.style.transform = `scale(${scale})`;
+      } else {
+        this.$.slides.style.transform = "none";
       }
     }
 
