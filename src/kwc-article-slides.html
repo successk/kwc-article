@@ -31,6 +31,10 @@
         border: 1px solid #e0e0e0;
       }
 
+      #slides:focus {
+        outline: none;
+      }
+
       #actions {
         display: flex;
         flex-direction: row;
@@ -93,7 +97,7 @@
       }
     </style>
 
-    <div id="slides">
+    <div id="slides" tabindex="-1">
       <content></content>
     </div>
     <progress id="progress" min="0" max="[[totalSlides]]" value$="[[slideIndex]]"></progress>
