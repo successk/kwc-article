@@ -65,11 +65,17 @@
           this._rightPressed(e);
         } else if (e.keyCode === 40) {
           this._downPressed(e);
+        } else if (e.keyCode === 27) {
+          this._escapePressed(e);
         }
       }, true);
 
       window.addEventListener("resize", (e) => {
         this._windowResized(e);
+      });
+
+      this.addEventListener("mousemove", (e) => {
+        this._mousemoved(e);
       });
     }
 
@@ -132,6 +138,31 @@
       this._resize();
     }
 
+    _escapePressed(e) {
+      this._exitFullScreen();
+    }
+
+    _mousemoved(e) {
+      if (this.fullScreen) {
+        // The following condition filter event due to keyboard inputs
+        // Behavior encountered in chrome 53
+        if (this._oldClientX !== e.clientX && this._oldClientY !== e.clientY) {
+          this._oldClientX = e.clientX;
+          this._oldClientY = e.clientY;
+          this.classList.remove("hide-actions");
+          if (this.hideMouseInterval) {
+            clearTimeout(this.hideMouseInterval);
+          }
+          this.hideMouseInterval = setTimeout(() => {
+            this.classList.add("hide-actions");
+
+            // Enable keyboard inputs after a focused button is hidden.
+            this.$.slidesContainer.focus();
+          }, 2500);
+        }
+      }
+    }
+
     _previous() {
       if (this._currentSlide.hasAttribute("previous")) {
         this.slide = this._currentSlide.getAttribute("previous");
@@ -151,9 +182,9 @@
         this.slide = this._currentSlide.getAttribute("next");
       } else {
         const slides = this.querySelectorAll("kwc-article-slide");
-        for (let i = 0, c = slides.length - 1 ; i < c ; i++) {
+        for (let i = 0, c = slides.length - 1; i < c; i++) {
           if (slides[i].getAttribute("name") === this.slide) {
-            this.slide = slides[i+1].getAttribute("name");
+            this.slide = slides[i + 1].getAttribute("name");
             break;
           }
         }
@@ -185,6 +216,7 @@
     _exitFullScreen() {
       this.fullScreen = false;
       this.classList.remove("full-screen");
+      let promise = Promise.resolve();
       if (document.fullScreen || document.webkitIsFullScreen || document.mozFullScreen) {
         const promise = this._createFullScreenChangePromise();
         if (document.exitFullscreen) {
@@ -194,12 +226,13 @@
         } else if (document.webkitCancelFullScreen) {
           document.webkitCancelFullScreen();
         }
-        this._resize();
-        return promise;
-      } else {
-        this._resize();
-        return Promise.resolve();
       }
+      this._resize();
+      if (this.hideMouseInterval) {
+        clearTimeout(this.hideMouseInterval);
+      }
+      this.classList.remove("hide-actions");
+      return promise;
     }
 
     _createFullScreenChangePromise() {
