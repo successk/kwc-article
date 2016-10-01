@@ -115,12 +115,28 @@
     _previous() {
       if (this._currentSlide.hasAttribute("previous")) {
         this.slide = this._currentSlide.getAttribute("previous");
+      } else {
+        const slides = this.querySelectorAll("kwc-article-slide");
+        for (let i = 1, c = slides.length ; i < c ; i++) {
+          if (slides[i].getAttribute("name") === this.slide) {
+            this.slide = slides[i-1].getAttribute("name");
+            break;
+          }
+        }
       }
     }
 
     _next() {
       if (this._currentSlide.hasAttribute("next")) {
         this.slide = this._currentSlide.getAttribute("next");
+      } else {
+        const slides = this.querySelectorAll("kwc-article-slide");
+        for (let i = 0, c = slides.length - 1 ; i < c ; i++) {
+          if (slides[i].getAttribute("name") === this.slide) {
+            this.slide = slides[i+1].getAttribute("name");
+            break;
+          }
+        }
       }
     }
 
