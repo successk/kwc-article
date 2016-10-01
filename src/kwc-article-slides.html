@@ -87,8 +87,13 @@
         display: inline;
       }
 
-      #progress {
+      .progress {
         width: 100%;
+        display: flex;
+      }
+
+      #progress {
+        flex-grow: 1;
         background-color: #fafafa;
         border: none;
       }
@@ -117,7 +122,10 @@
         <content></content>
       </div>
     </div>
-    <progress id="progress" min="0" max="[[totalSlides]]" value$="[[slideIndex]]"></progress>
+    <div class="progress">
+      <progress id="progress" min="0" max="[[totalSlides]]" value$="[[slideIndex]]"></progress>
+      <span>[[slideIndex]] / [[totalSlides]]</span>
+    </div>
     <div id="actions">
       <button id="previous" title="Previous">◀</button>
       <button id="related" disabled="[[!partRelated]]" title="Go to related part">⤴</button>
