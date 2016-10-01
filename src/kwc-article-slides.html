@@ -42,16 +42,44 @@
       #actions button {
         flex-grow: 1;
       }
+
+      #actions button {
+        border: none;
+        background-color: #eeeeee;
+        cursor: pointer;
+        color: #757575;
+      }
+
+      #actions button:hover:not([disabled]) {
+        color: #424242;
+        background-color: #e0e0e0;
+      }
+
+      #actions button[disabled] {
+        cursor: not-allowed;
+        color: #bdbdbd;
+      }
+
+      .show-when-fullscreen, :host.full-screen .hide-when-fullscreen {
+        display: none;
+      }
+
+      :host.full-screen .show-when-fullscreen, .hide-when-fullscreen {
+        display: inline;
+      }
     </style>
 
     <div id="slides">
       <content></content>
     </div>
     <div id="actions">
-      <button id="previous">Previous</button>
-      <button id="next">Next</button>
-      <button id="related" hidden$="[[!partRelated]]">Go to related part</button>
-      <button id="fullscreen">Full-screen</button>
+      <button id="previous" title="Previous">◀</button>
+      <button id="related" disabled="[[!partRelated]]" title="Go to related part">⤴</button>
+      <button id="fullscreen" title="Full screen">
+        <span class="hide-when-fullscreen">↗</span>
+        <span class="show-when-fullscreen">↙</span>
+      </button>
+      <button id="next" title="next">▶</button>
     </div>
   </template>
 
