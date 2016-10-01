@@ -67,11 +67,36 @@
       :host.full-screen .show-when-fullscreen, .hide-when-fullscreen {
         display: inline;
       }
+
+      #progress {
+        width: 100%;
+        background-color: #fafafa;
+        border: none;
+      }
+
+      #progress::-webkit-progress-bar {
+        background-color: #fafafa;
+        border: none;
+      }
+
+      #progress::-webkit-progress-value {
+        background-color: #e0e0e0;
+        background-image: -webkit-linear-gradient(-45deg, transparent 25%, rgba(255, 255, 255, 0.3) 25%, rgba(255, 255, 255, 0.3) 50%, transparent 50%, transparent 75%, rgba(255, 255, 255, 0.3) 75%, rgba(255, 255, 255, 0.3));
+        background-image: linear-gradient(-45deg, transparent 25%, rgba(255, 255, 255, 0.3) 25%, rgba(255, 255, 255, 0.3) 50%, transparent 50%, transparent 75%, rgba(255, 255, 255, 0.3) 75%, rgba(255, 255, 255, 0.3));
+        background-size: 25px 25px;
+      }
+      #progress::-moz-progress-bar {
+        border: none;
+        background-color: #e0e0e0;
+        background-image: linear-gradient(-45deg, transparent 25%, rgba(255, 255, 255, 0.3) 25%, rgba(255, 255, 255, 0.3) 50%, transparent 50%, transparent 75%, rgba(255, 255, 255, 0.3) 75%, rgba(255, 255, 255, 0.3));
+        background-size: 25px 25px;
+      }
     </style>
 
     <div id="slides">
       <content></content>
     </div>
+    <progress id="progress" min="0" max="[[totalSlides]]" value$="[[slideIndex]]"></progress>
     <div id="actions">
       <button id="previous" title="Previous">◀</button>
       <button id="related" disabled="[[!partRelated]]" title="Go to related part">⤴</button>

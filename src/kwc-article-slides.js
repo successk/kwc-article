@@ -22,6 +22,16 @@
         partRelated: {
           type: Boolean,
           value: false
+        },
+        totalSlides: {
+          type: Number,
+          value: 0,
+          readOnly: true
+        },
+        slideIndex: {
+          type: Number,
+          value: 0,
+          readOnly: true
         }
       };
 
@@ -39,6 +49,8 @@
       } else {
         this.slide = this.querySelector("kwc-article-slide").name;
       }
+
+      this._setTotalSlides(this.querySelectorAll("kwc-article-slide").length);
 
       this.addEventListener("keydown", (e) => {
         if (e.keyCode === 33) {
@@ -190,9 +202,10 @@
     }
 
     _slideChanged(name) {
-      Array.from(this.querySelectorAll("kwc-article-slide")).forEach((slide) => {
+      Array.from(this.querySelectorAll("kwc-article-slide")).forEach((slide, index) => {
         if (slide.getAttribute("name") === name) {
           slide.style.display = "flex";
+          this._setSlideIndex(index + 1);
         } else {
           slide.style.display = "none";
         }

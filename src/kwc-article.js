@@ -11,7 +11,7 @@
     attachedCallback() {
       const summary = this.querySelector("kwc-article-summary");
       if (summary) {
-        const titleNodes = this.querySelectorAll(".kwc-article-text h2, .kwc-article-text h3, .kwc-article-text h4, .kwc-article-text h5, .kwc-article-text h6");
+        const titleNodes = Array.from(this.querySelectorAll(".kwc-article-text h2, .kwc-article-text h3, .kwc-article-text h4, .kwc-article-text h5, .kwc-article-text h6"));
         const summaryItems = [];
         const flatItems = [];
 
