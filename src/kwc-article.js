@@ -30,7 +30,7 @@
           const item = {level: level, name: titleNode.textContent, id: titleNode.getAttribute("id"), children: []};
           if (level > 2) {
             for (let i = flatItems.length - 1; i >= 0; i--) {
-              if (flatItems[i].level !== level) {
+              if (flatItems[i].level < level) {
                 flatItems[i].children.push(item);
                 break;
               }
