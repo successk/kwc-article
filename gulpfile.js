@@ -18,6 +18,7 @@ const tasks = Object.freeze({
   compileJS: "compileJS",
   devSrcJS: "devSrcJS",
   devDemoJS: "devDemoJS",
+  devDemoCopy: "devDemoCopy",
   devDependencies: "devDependencies",
   dev: "dev",
 
@@ -39,6 +40,7 @@ const paths = Object.freeze({
   srcJS: "src/*.js",
   demoHTML: "demo/**/*.html",
   demoJS: "demo/**/*.js",
+  demoCopy: "demo/**/*.{jpg,jpeg,png,gif}",
 
   dev: "build/dev",
   demoComponent: "build/dev/" + bowerConfig.name,
@@ -74,6 +76,13 @@ function compileHTML(source, dest) {
     .pipe(gulp.dest(dest));
 }
 
+function copyFiles(source, dest) {
+  "use strict";
+  return gulp.src(source)
+    .on("error", handleError)
+    .pipe(gulp.dest(dest));
+}
+
 function dependencies(dest) {
   "use strict";
   return gulp.src("bower_components/**/*")
@@ -86,13 +95,15 @@ gulp.task(tasks.devSrcJS, () => compileJS(paths.srcJS, paths.demoComponent));
 
 gulp.task(tasks.devDemoJS, () => compileJS(paths.demoJS, paths.demoDemo));
 
+gulp.task(tasks.devDemoCopy, () => copyFiles(paths.demoCopy, paths.demoDemo));
+
 gulp.task(tasks.devSrcHTML, () => compileHTML(paths.srcHTML, paths.demoComponent));
 
 gulp.task(tasks.devDemoHTML, () => compileHTML(paths.demoHTML, paths.demoDemo));
 
 gulp.task(tasks.devDependencies, () => dependencies(paths.dev));
 
-gulp.task(tasks.dev, [tasks.devSrcJS, tasks.devDemoJS, tasks.devSrcHTML, tasks.devDemoHTML, tasks.devDependencies], function () {
+gulp.task(tasks.dev, [tasks.devSrcJS, tasks.devDemoJS, tasks.devSrcHTML, tasks.devDemoHTML, tasks.devDemoCopy, tasks.devDependencies], function () {
   gulp.watch(paths.demoJS, [tasks.devDemoJS]);
   gulp.watch(paths.srcJS, [tasks.devSrcJS]);
   gulp.watch(paths.demoHTML, [tasks.devDemoHTML]);

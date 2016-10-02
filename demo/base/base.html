@@ -22,7 +22,7 @@
         </p>
       </header>
 
-      <kwc-article-summary></kwc-article-summary>
+      <kwc-article-summary summary-title="Table of contents"></kwc-article-summary>
 
       <section class="kwc-article-text">
         <h2 id="lorem-ipsum">Lorem ipsum dolor sit amet</h2>
@@ -120,6 +120,39 @@
           <p>
             Bind your article with a slide system.
           </p>
+        </kwc-article-slide>
+        <kwc-article-slide name="part3" type="title">
+          <h2>There is only a title!</h2>
+        </kwc-article-slide>
+        <kwc-article-slide name="part4" type="figure">
+          <figure>
+            <img src="big-image-width.png" alt="Big image, resized">
+            <figcaption>Big image, resized</figcaption>
+          </figure>
+        </kwc-article-slide>
+        <kwc-article-slide name="part4-1" type="figure">
+          <figure>
+            <img src="big-image-height.png" alt="Big image by height, resized">
+            <figcaption>Big image by height, resized</figcaption>
+          </figure>
+        </kwc-article-slide>
+        <kwc-article-slide name="part5" type="title-list">
+          <h3>My title</h3>
+          <ul>
+            <li>My</li>
+            <li>List</li>
+            <li>Items</li>
+            <li>With a big item here</li>
+          </ul>
+        </kwc-article-slide>
+        <kwc-article-slide name="part6" type="title-list">
+          <h3>My title</h3>
+          <ol>
+            <li>My</li>
+            <li>List</li>
+            <li>Items</li>
+            <li>With a big item here</li>
+          </ol>
         </kwc-article-slide>
       </kwc-article-slides>
     </article>

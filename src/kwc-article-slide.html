@@ -44,6 +44,48 @@
       .title-content ::content p {
         font-size: 1.5rem;
       }
+
+      .title {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .title ::content h2 {
+        font-size: 3rem;
+      }
+
+      .figure {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .figure ::content figure {
+        margin: 0;
+        padding: 0;
+      }
+
+      .figure ::content figure img {
+        max-width: 100%;
+        max-height: 450px;
+      }
+
+      .title-list {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .title-list ::content ul, .title-list ::content ol {
+        text-align: left;
+      }
     </style>
 
     <template is="dom-if" if="[[isType(type, 'title-subtitle')]]">
@@ -57,6 +99,25 @@
       <div class="slide title-content">
         <content select="h3"></content>
         <content select="p"></content>
+      </div>
+    </template>
+
+    <template is="dom-if" if="[[isType(type, 'title')]]">
+      <div class="slide title">
+        <content select="h2"></content>
+      </div>
+    </template>
+
+    <template is="dom-if" if="[[isType(type, 'figure')]]">
+      <div class="slide figure">
+        <content select="figure"></content>
+      </div>
+    </template>
+
+    <template is="dom-if" if="[[isType(type, 'title-list')]]">
+      <div class="slide title-list">
+        <content select="h3"></content>
+        <content select="ul,ol"></content>
       </div>
     </template>
   </template>
