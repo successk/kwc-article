@@ -2,6 +2,10 @@
 
 <dom-module id="kwc-article-summary">
   <template>
+    <template is="dom-if" if="[[summaryTitle]]">
+      <h2>[[summaryTitle]]</h2>
+    </template>
+
     <ol id="root"></ol>
   </template>
 

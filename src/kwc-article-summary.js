@@ -10,6 +10,10 @@
           type: Array,
           value: [],
           observer: "_itemsChanged"
+        },
+        summaryTitle: {
+          type: String,
+          value: null
         }
       };
     }
