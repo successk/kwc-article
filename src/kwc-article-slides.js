@@ -55,8 +55,16 @@
         "previous.tap": "_previousTap",
         "next.tap": "_nextTap",
         "fullscreen.tap": "_fullscreenTap",
-        "related.tap": "_partRelatedTap"
+        "related.tap": "_partRelatedTap",
+        "inputSlideIndex.input": "_inputSlideIndexInput"
       };
+    }
+
+    _inputSlideIndexInput(e) {
+      const slides = Array.from(this.querySelectorAll("kwc-article-slide"));
+      if (1 <= e.target.value && e.target.value <= slides.length) {
+        this.slide = slides[e.target.value - 1].getAttribute("name");
+      }
     }
 
     attachedCallback() {
@@ -74,20 +82,22 @@
       });
 
       this.addEventListener("keydown", (e) => {
-        if (e.keyCode === 33) {
-          this._pageupPressed(e);
-        } else if (e.keyCode === 34) {
-          this._pagedownPressed(e);
-        } else if (e.keyCode === 37) {
-          this._leftPressed(e);
-        } else if (e.keyCode === 38) {
-          this._upPressed(e);
-        } else if (e.keyCode === 39) {
-          this._rightPressed(e);
-        } else if (e.keyCode === 40) {
-          this._downPressed(e);
-        } else if (e.keyCode === 27) {
-          this._escapePressed(e);
+        if (!e.target || !e.target.hasAttribute("id") || e.target.getAttribute("id") !== "inputSlideIndex") {
+          if (e.keyCode === 33) {
+            this._pageupPressed(e);
+          } else if (e.keyCode === 34) {
+            this._pagedownPressed(e);
+          } else if (e.keyCode === 37) {
+            this._leftPressed(e);
+          } else if (e.keyCode === 38) {
+            this._upPressed(e);
+          } else if (e.keyCode === 39) {
+            this._rightPressed(e);
+          } else if (e.keyCode === 40) {
+            this._downPressed(e);
+          } else if (e.keyCode === 27) {
+            this._escapePressed(e);
+          }
         }
       }, true);
 
@@ -190,7 +200,9 @@
             this.classList.add("hide-actions");
 
             // Enable keyboard inputs after a focused button is hidden.
-            this.$.slidesContainer.focus();
+            if (this.$.inputSlideIndex !== document.activeElement) {
+              this.$.slidesContainer.focus();
+            }
           }, 2500);
         }
       }
