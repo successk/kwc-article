@@ -32,6 +32,22 @@
           type: Number,
           value: 0,
           readOnly: true
+        },
+        width: {
+          type: Number,
+          value: 500
+        },
+        height: {
+          type: Number,
+          value: 500
+        },
+        styleContainer: {
+          type: String,
+          computed: "_computeStyleContainer(width, fullScreen)"
+        },
+        styleSlides: {
+          type: String,
+          computed: "_computeStyleSlides(width, height)"
         }
       };
 
@@ -50,7 +66,12 @@
         this.slide = this.querySelector("kwc-article-slide").name;
       }
 
-      this._setTotalSlides(this.querySelectorAll("kwc-article-slide").length);
+      const slides = this.querySelectorAll("kwc-article-slide");
+      this._setTotalSlides(slides.length);
+      slides.forEach((slide) => {
+        slide.setAttribute("width", this.width);
+        slide.setAttribute("height", this.height);
+      });
 
       this.addEventListener("keydown", (e) => {
         if (e.keyCode === 33) {
@@ -77,6 +98,18 @@
       this.addEventListener("mousemove", (e) => {
         this._mousemoved(e);
       });
+    }
+
+    _computeStyleContainer(width, fullScreen) {
+      if (fullScreen) {
+        return "";
+      } else {
+        return `width:${width}px`;
+      }
+    }
+
+    _computeStyleSlides(width, height) {
+        return `width:${width}px;height:${height}px`;
     }
 
     _previousTap(e) {
@@ -253,7 +286,10 @@
 
     _resize() {
       if (this.fullScreen) {
-        const scale = Math.min(this.$.slidesContainer.offsetWidth, this.$.slidesContainer.offsetHeight) / 500;
+        const scale = Math.min(
+          this.$.slidesContainer.offsetWidth / this.width,
+          this.$.slidesContainer.offsetHeight / this.height
+        );
         this.$.slides.style.transform = `scale(${scale})`;
       } else {
         this.$.slides.style.transform = "none";
@@ -263,10 +299,10 @@
     _slideChanged(name) {
       Array.from(this.querySelectorAll("kwc-article-slide")).forEach((slide, index) => {
         if (slide.getAttribute("name") === name) {
-          slide.style.display = "flex";
+          slide.show = true;
           this._setSlideIndex(index + 1);
         } else {
-          slide.style.display = "none";
+          slide.show = false;
         }
       });
       this.partRelated = this._currentSlide && this._currentSlide.hasAttribute("part");

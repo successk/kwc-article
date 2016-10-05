@@ -3,18 +3,17 @@
 <dom-module id="kwc-article-slides">
   <template>
     <style>
-      :host {
+      #container {
         display: flex;
         flex-direction: column;
         background-color: #fff;
       }
 
-      :host:not(.full-screen) {
+      :host:not(.full-screen) #container {
         margin: auto;
-        width: 500px;
       }
 
-      :host.full-screen {
+      :host.full-screen #container {
         position: fixed;
         top: 0;
         left: 0;
@@ -22,7 +21,7 @@
         right: 0;
       }
 
-      :host.hide-actions {
+      :host.hide-actions #container {
         cursor: none;
       }
 
@@ -34,8 +33,6 @@
       #slides {
         display: flex;
         margin: auto;
-        width: 500px;
-        height: 500px;
       }
 
       :host:not(.full-screen) #slides {
@@ -117,23 +114,25 @@
       }
     </style>
 
-    <div id="slidesContainer" tabindex="-1">
-      <div id="slides">
-        <content></content>
+    <div id="container" style$="[[styleContainer]]">
+      <div id="slidesContainer" tabindex="-1">
+        <div id="slides" style$="[[styleSlides]]">
+          <content></content>
+        </div>
       </div>
-    </div>
-    <div class="progress">
-      <progress id="progress" min="0" max="[[totalSlides]]" value$="[[slideIndex]]"></progress>
-      <span>[[slideIndex]] / [[totalSlides]]</span>
-    </div>
-    <div id="actions">
-      <button id="previous" title="Previous">◀</button>
-      <button id="related" disabled="[[!partRelated]]" title="Go to related part">⤴</button>
-      <button id="fullscreen" title="Full screen">
-        <span class="hide-when-fullscreen">↗</span>
-        <span class="show-when-fullscreen">↙</span>
-      </button>
-      <button id="next" title="next">▶</button>
+      <div class="progress">
+        <progress id="progress" min="0" max="[[totalSlides]]" value$="[[slideIndex]]"></progress>
+        <span>[[slideIndex]] / [[totalSlides]]</span>
+      </div>
+      <div id="actions">
+        <button id="previous" title="Previous">◀</button>
+        <button id="related" disabled="[[!partRelated]]" title="Go to related part">⤴</button>
+        <button id="fullscreen" title="Full screen">
+          <span class="hide-when-fullscreen">↗</span>
+          <span class="show-when-fullscreen">↙</span>
+        </button>
+        <button id="next" title="next">▶</button>
+      </div>
     </div>
   </template>
 
