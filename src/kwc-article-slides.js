@@ -45,6 +45,10 @@
           type: String,
           value: null
         },
+        fullBackground: {
+          type: String,
+          value: null
+        },
         styleContainer: {
           type: String,
           computed: "_computeStyleContainer(width, fullScreen)"
@@ -52,6 +56,10 @@
         styleSlides: {
           type: String,
           computed: "_computeStyleSlides(width, height, background)"
+        },
+        styleSlidesContainer: {
+          type: String,
+          computed: "_computeStyleSlidesContainer(fullBackground)"
         }
       };
 
@@ -122,20 +130,32 @@
       }
     }
 
+    _computeStyleSlidesContainer(fullBackground) {
+      const styles = [];
+      if (fullBackground) {
+        this._pushBackgroundStyles(styles, fullBackground);
+      }
+      return styles.join(";");
+    }
+
     _computeStyleSlides(width, height, background) {
       const styles = [
         `width:${width}px`,
         `height:${height}px`
       ];
       if (background) {
-        if (background.startsWith("#") || background.startsWith("rgb")) {
-          styles.push(`background-color:${background}`);
-        } else {
-          styles.push(`background-image:url(${background})`);
-          styles.push("background-size:100% 100%");
-        }
+        this._pushBackgroundStyles(styles, background);
       }
       return styles.join(";");
+    }
+
+    _pushBackgroundStyles(styles, background) {
+      if (background.startsWith("#") || background.startsWith("rgb")) {
+        styles.push(`background-color:${background}`);
+      } else {
+        styles.push(`background-image:url(${background})`);
+        styles.push("background-size:100% 100%");
+      }
     }
 
     _previousTap(e) {

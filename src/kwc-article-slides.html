@@ -6,7 +6,6 @@
       #container {
         display: flex;
         flex-direction: column;
-        background-color: #fff;
       }
 
       :host:not(.full-screen) #container {
@@ -126,7 +125,7 @@
     </style>
 
     <div id="container" style$="[[styleContainer]]">
-      <div id="slidesContainer" tabindex="-1">
+      <div id="slidesContainer" tabindex="-1" style$="[[styleSlidesContainer]]">
         <div id="slides" style$="[[styleSlides]]">
           <content></content>
         </div>
