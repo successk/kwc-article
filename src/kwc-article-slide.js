@@ -25,6 +25,14 @@
           value: false,
           reflectToAttribute: true,
           observer: "_showChanged"
+        },
+        background: {
+          type: String,
+          value: null
+        },
+        styleSlide: {
+          type: String,
+          computed: "_computeStyleSlide(background)"
         }
       };
     }
@@ -51,6 +59,23 @@
           });
         });
       }, 1);
+    }
+
+    _computeStyleSlide(background) {
+      const styles = [];
+      if (background) {
+        this._pushBackgroundStyles(styles, background);
+      }
+      return styles.join(";");
+    }
+
+    _pushBackgroundStyles(styles, background) {
+      if (background.startsWith("#") || background.startsWith("rgb")) {
+        styles.push(`background-color:${background}`);
+      } else {
+        styles.push(`background-image:url(${background})`);
+        styles.push("background-size:100% 100%");
+      }
     }
   }
 

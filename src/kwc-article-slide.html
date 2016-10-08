@@ -3,7 +3,7 @@
 <dom-module id="kwc-article-slide">
   <template>
     <style>
-      :host {
+      :host, :host #slide {
         display: flex;
         width: 100%;
       }
@@ -125,62 +125,64 @@
       }
     </style>
 
-    <template is="dom-if" if="[[isType(type, 'title-subtitle')]]">
-      <div class="slide title-subtitle">
-        <content select="h1"></content>
-        <content select="p"></content>
-      </div>
-    </template>
+    <div id="slide" style="[[styleSlide]]">
+      <template is="dom-if" if="[[isType(type, 'title-subtitle')]]">
+        <div class="slide title-subtitle">
+          <content select="h1"></content>
+          <content select="p"></content>
+        </div>
+      </template>
 
-    <template is="dom-if" if="[[isType(type, 'title-content')]]">
-      <div class="slide title-content">
-        <content select="h3"></content>
-        <content select="p"></content>
-      </div>
-    </template>
-
-    <template is="dom-if" if="[[isType(type, 'title')]]">
-      <div class="slide title">
-        <content select="h2"></content>
-      </div>
-    </template>
-
-    <template is="dom-if" if="[[isType(type, 'figure')]]">
-      <div class="slide figure">
-        <content select="figure"></content>
-      </div>
-    </template>
-
-    <template is="dom-if" if="[[isType(type, 'title-list')]]">
-      <div class="slide title-list">
-        <content select="h3"></content>
-        <content select="ul,ol"></content>
-      </div>
-    </template>
-
-    <template is="dom-if" if="[[isType(type, 'title-content-image-right')]]">
-      <div class="slide title-content-image-right">
-        <div class="kwc-article-slide-left">
+      <template is="dom-if" if="[[isType(type, 'title-content')]]">
+        <div class="slide title-content">
           <content select="h3"></content>
           <content select="p"></content>
         </div>
-        <div class="kwc-article-slide-right">
-          <content select="figure"></content>
-        </div>
-      </div>
-    </template>
+      </template>
 
-    <template is="dom-if" if="[[isType(type, 'title-content-image-left')]]">
-      <div class="slide title-content-image-left">
-        <div class="kwc-article-slide-left">
+      <template is="dom-if" if="[[isType(type, 'title')]]">
+        <div class="slide title">
+          <content select="h2"></content>
+        </div>
+      </template>
+
+      <template is="dom-if" if="[[isType(type, 'figure')]]">
+        <div class="slide figure">
           <content select="figure"></content>
         </div>
-        <div class="kwc-article-slide-right">
+      </template>
+
+      <template is="dom-if" if="[[isType(type, 'title-list')]]">
+        <div class="slide title-list">
           <content select="h3"></content>
-          <content select="p"></content>
+          <content select="ul,ol"></content>
         </div>
-      </div>
-    </template>
+      </template>
+
+      <template is="dom-if" if="[[isType(type, 'title-content-image-right')]]">
+        <div class="slide title-content-image-right">
+          <div class="kwc-article-slide-left">
+            <content select="h3"></content>
+            <content select="p"></content>
+          </div>
+          <div class="kwc-article-slide-right">
+            <content select="figure"></content>
+          </div>
+        </div>
+      </template>
+
+      <template is="dom-if" if="[[isType(type, 'title-content-image-left')]]">
+        <div class="slide title-content-image-left">
+          <div class="kwc-article-slide-left">
+            <content select="figure"></content>
+          </div>
+          <div class="kwc-article-slide-right">
+            <content select="h3"></content>
+            <content select="p"></content>
+          </div>
+        </div>
+      </template>
+    </div>
   </template>
 
   <script src="kwc-article-slide.js" inline></script>
