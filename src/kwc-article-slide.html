@@ -89,6 +89,40 @@
       .title-list ::content ul, .title-list ::content ol {
         text-align: left;
       }
+
+      .title-content-image-left, .title-content-image-right {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .title-content-image-left ::content h3, .title-content-image-right ::content h3 {
+        font-size: 2rem;
+      }
+
+      .title-content-image-left ::content p, .title-content-image-right ::content p {
+        font-size: 1.5rem;
+      }
+
+      .title-content-image-left ::content figure, .title-content-image-right ::content figure {
+        margin: 0;
+        padding: 0;
+      }
+
+      .title-content-image-left ::content figure img, .title-content-image-right ::content figure img {
+        max-width: 100%;
+      }
+
+      .kwc-article-slide-left, .kwc-article-slide-right {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+      }
     </style>
 
     <template is="dom-if" if="[[isType(type, 'title-subtitle')]]">
@@ -121,6 +155,30 @@
       <div class="slide title-list">
         <content select="h3"></content>
         <content select="ul,ol"></content>
+      </div>
+    </template>
+
+    <template is="dom-if" if="[[isType(type, 'title-content-image-right')]]">
+      <div class="slide title-content-image-right">
+        <div class="kwc-article-slide-left">
+          <content select="h3"></content>
+          <content select="p"></content>
+        </div>
+        <div class="kwc-article-slide-right">
+          <content select="figure"></content>
+        </div>
+      </div>
+    </template>
+
+    <template is="dom-if" if="[[isType(type, 'title-content-image-left')]]">
+      <div class="slide title-content-image-left">
+        <div class="kwc-article-slide-left">
+          <content select="figure"></content>
+        </div>
+        <div class="kwc-article-slide-right">
+          <content select="h3"></content>
+          <content select="p"></content>
+        </div>
       </div>
     </template>
   </template>
