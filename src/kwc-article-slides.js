@@ -86,13 +86,6 @@
         this.slide = this.querySelector("kwc-article-slide").name;
       }
 
-      const slides = this.querySelectorAll("kwc-article-slide");
-      this._setTotalSlides(slides.length);
-      slides.forEach((slide) => {
-        slide.setAttribute("width", this.width);
-        slide.setAttribute("height", this.height);
-      });
-
       this.addEventListener("keydown", (e) => {
         if (!e.target || !e.target.hasAttribute("id") || e.target.getAttribute("id") !== "inputSlideIndex") {
           if (e.keyCode === 33) {
@@ -120,6 +113,17 @@
       this.addEventListener("mousemove", (e) => {
         this._mousemoved(e);
       });
+
+      setTimeout(() => {
+        const slides = this.querySelectorAll("kwc-article-slide");
+        const masks = Array.from(this.querySelectorAll("kwc-article-slide-mask"));
+        const masksHeight = masks.length > 0 ? masks.map(m => m.offsetHeight).reduce((acc, height) => acc + height) : 0;
+        this._setTotalSlides(slides.length);
+        slides.forEach((slide) => {
+          slide.setAttribute("width", this.width);
+          slide.setAttribute("height", this.height - masksHeight);
+        });
+      }, 1);
     }
 
     _computeStyleContainer(width, fullScreen) {
@@ -349,6 +353,7 @@
         if (slide.getAttribute("name") === name) {
           slide.show = true;
           this._setSlideIndex(index + 1);
+          Array.from(this.querySelectorAll("kwc-article-slide-mask")).forEach(m => m.slide = index + 1);
         } else {
           slide.show = false;
         }

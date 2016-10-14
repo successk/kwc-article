@@ -8,6 +8,12 @@
   <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
 
   <link rel="import" href="../../kwc-article/kwc-article.html">
+
+  <style>
+    .text-center {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
@@ -102,6 +108,20 @@
       </section>
 
       <kwc-article-slides start="welcome" background="background.png" full-background="#000">
+        <kwc-article-slide-mask location="top">
+          <template>
+            <div class="text-center">
+              The article web component
+            </div>
+          </template>
+        </kwc-article-slide-mask>
+        <kwc-article-slide-mask location="bottom">
+          <template>
+            <div class="text-center">
+              [[kwc-slide]]
+            </div>
+          </template>
+        </kwc-article-slide-mask>
         <kwc-article-slide name="welcome" type="title-subtitle" next="part1">
           <h1>The article Web Component</h1>
           <p>

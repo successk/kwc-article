@@ -32,6 +32,7 @@
       #slides {
         display: flex;
         margin: auto;
+        flex-direction: column;
       }
 
       :host:not(.full-screen) #slides {
@@ -127,7 +128,9 @@
     <div id="container" style$="[[styleContainer]]">
       <div id="slidesContainer" tabindex="-1" style$="[[styleSlidesContainer]]">
         <div id="slides" style$="[[styleSlides]]">
-          <content></content>
+          <content select="kwc-article-slide-mask[location=top]"></content>
+          <content select="kwc-article-slide"></content>
+          <content select="kwc-article-slide-mask[location=bottom]"></content>
         </div>
       </div>
       <div class="progress">
