@@ -11,6 +11,11 @@
           value: 0,
           observer: "_attrUpdated"
         },
+        slidesCount: {
+          type: Number,
+          value: 0,
+          observer: "_attrUpdated"
+        },
         breadcrumb: {
           type: String,
           value: null,
@@ -41,7 +46,8 @@
       return this.stamp({
         "kwc-has-breadcrumb": this.breadcrumb.length > 0,
         "kwc-breadcrumb": this.breadcrumb.join(this.breadcrumbSeparator),
-        "kwc-slide": this.slide
+        "kwc-slide": this.slide,
+        "kwc-slides-count": this.slidesCount
       });
     }
 

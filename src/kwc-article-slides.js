@@ -121,6 +121,7 @@
         const slides = this.querySelectorAll("kwc-article-slide");
         const masks = Array.from(this.querySelectorAll("kwc-article-slide-mask"));
         const masksHeight = masks.length > 0 ? masks.map(m => m.offsetHeight).reduce((acc, height) => acc + height) : 0;
+        masks.forEach(m => m.slidesCount = slides.length);
         this._setTotalSlides(slides.length);
         slides.forEach((slide) => {
           slide.setAttribute("width", this.width);
