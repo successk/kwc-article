@@ -106,6 +106,7 @@
         background-image: linear-gradient(-45deg, transparent 25%, rgba(255, 255, 255, 0.3) 25%, rgba(255, 255, 255, 0.3) 50%, transparent 50%, transparent 75%, rgba(255, 255, 255, 0.3) 75%, rgba(255, 255, 255, 0.3));
         background-size: 25px 25px;
       }
+
       #progress::-moz-progress-bar {
         border: none;
         background-color: #e0e0e0;
@@ -135,7 +136,7 @@
       </div>
       <div class="progress">
         <progress id="progress" min="0" max="[[totalSlides]]" value$="[[slideIndex]]"></progress>
-        <span>
+        <span hidden="[[hideSlideNumber]]">
           <input type="number" min="1" max="[[totalSlides]]" value="[[slideIndex]]" id="inputSlideIndex">
           / [[totalSlides]]
         </span>

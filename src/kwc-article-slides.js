@@ -60,6 +60,10 @@
         styleSlidesContainer: {
           type: String,
           computed: "_computeStyleSlidesContainer(fullBackground)"
+        },
+        hideSlideNumber: {
+          type: Boolean,
+          value: false
         }
       };
 

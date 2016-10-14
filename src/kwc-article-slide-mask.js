@@ -43,9 +43,10 @@
     }
 
     getContent() {
+      const hasBreadcrumb = this.breadcrumb && this.breadcrumb.length > 0;
       return this.stamp({
-        "kwc-has-breadcrumb": this.breadcrumb.length > 0,
-        "kwc-breadcrumb": this.breadcrumb.join(this.breadcrumbSeparator),
+        "kwc-has-breadcrumb": hasBreadcrumb,
+        "kwc-breadcrumb": hasBreadcrumb ? this.breadcrumb.join(this.breadcrumbSeparator) : "",
         "kwc-slide": this.slide,
         "kwc-slides-count": this.slidesCount
       });
