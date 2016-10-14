@@ -6,15 +6,19 @@
       this.is = "kwc-article-slide-mask";
 
       this.properties = {
-        title: {
-          type: String,
-          value: null,
-          observer: "_attrUpdated"
-        },
         slide: {
           type: Number,
           value: 0,
           observer: "_attrUpdated"
+        },
+        breadcrumb: {
+          type: String,
+          value: null,
+          observer: "_attrUpdated"
+        },
+        breadcrumbSeparator: {
+          type: String,
+          value: ", "
         }
       };
     }
@@ -35,7 +39,8 @@
 
     getContent() {
       return this.stamp({
-        "kwc-title": this.title,
+        "kwc-has-breadcrumb": this.breadcrumb.length > 0,
+        "kwc-breadcrumb": this.breadcrumb.join(this.breadcrumbSeparator),
         "kwc-slide": this.slide
       });
     }

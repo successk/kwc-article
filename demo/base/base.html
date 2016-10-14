@@ -108,10 +108,13 @@
       </section>
 
       <kwc-article-slides start="welcome" background="background.png" full-background="#000">
-        <kwc-article-slide-mask location="top">
+        <kwc-article-slide-mask location="top" breadcrumb-separator=" &gt; ">
           <template>
             <div class="text-center">
-              The article web component
+              The article Web Component
+              <template is="dom-if" if="[[kwc-has-breadcrumb]]">
+                — [[kwc-breadcrumb]]
+              </template>
             </div>
           </template>
         </kwc-article-slide-mask>
@@ -122,29 +125,29 @@
             </div>
           </template>
         </kwc-article-slide-mask>
-        <kwc-article-slide name="welcome" type="title-subtitle" next="part1">
+        <kwc-article-slide name="welcome" type="title-subtitle" next="part1" h1="_none_">
           <h1>The article Web Component</h1>
           <p>
             <strong>Kwc</strong> released a new web component: <code>kwc-article</code>.
             But what is this web component and for what purpose?
           </p>
         </kwc-article-slide>
-        <kwc-article-slide name="part1" type="title-content" previous="welcome" part="lorem-ipsum">
+        <kwc-article-slide name="part1" type="title-content" previous="welcome" part="lorem-ipsum" h1="Part 1">
           <h3>What is <code>kwc-article</code>?</h3>
           <p>
             <code>kwc-article</code> is a super web component to make wonderful articles.
           </p>
         </kwc-article-slide>
-        <kwc-article-slide name="part2" type="title-content">
+        <kwc-article-slide name="part2" type="title-content" h1="Part 2">
           <h3>And for what purpose?</h3>
           <p>
             Bind your article with a slide system.
           </p>
         </kwc-article-slide>
-        <kwc-article-slide name="part3" type="title">
+        <kwc-article-slide name="part3" type="title" h2="Part 21">
           <h2>There is only a title!</h2>
         </kwc-article-slide>
-        <kwc-article-slide name="part4" type="figure">
+        <kwc-article-slide name="part4" type="figure" h2="Part 22">
           <figure>
             <img src="big-image-width.png" alt="Big image, resized">
             <figcaption>Big image, resized</figcaption>
@@ -156,7 +159,7 @@
             <figcaption>Big image by height, resized</figcaption>
           </figure>
         </kwc-article-slide>
-        <kwc-article-slide name="part5" type="title-list">
+        <kwc-article-slide name="part5" type="title-list" h1="Part 3" h2="Part 31">
           <h3>My title</h3>
           <ul>
             <li>My</li>
@@ -174,14 +177,14 @@
             <li>With a big item here</li>
           </ol>
         </kwc-article-slide>
-        <kwc-article-slide name="part7" type="title-content-image-left">
+        <kwc-article-slide name="part7" type="title-content-image-left" h2="Part 32" h3="Part 321">
           <h3>Title + content + image</h3>
           <p>There is an image on the left</p>
           <figure>
             <img src="big-image-width.png" alt="Big image, resized">
           </figure>
         </kwc-article-slide>
-        <kwc-article-slide name="part8" type="title-content-image-right">
+        <kwc-article-slide name="part8" type="title-content-image-right" h3="Part 322">
           <h3>Title + content + image</h3>
           <p>There is an image on the right</p>
           <figure>
@@ -189,7 +192,7 @@
             <figcaption>Big image, resized</figcaption>
           </figure>
         </kwc-article-slide>
-        <kwc-article-slide name="part9" type="title-content" background="#9999ff">
+        <kwc-article-slide name="part9" type="title-content" background="#9999ff" h1="_none_">
           <h3>Super background!</h3>
           <p>You can add a background on a slide too</p>
         </kwc-article-slide>

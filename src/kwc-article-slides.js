@@ -114,6 +114,9 @@
         this._mousemoved(e);
       });
 
+      this._buildTitles();
+      this._updateTitlesOnMasks();
+
       setTimeout(() => {
         const slides = this.querySelectorAll("kwc-article-slide");
         const masks = Array.from(this.querySelectorAll("kwc-article-slide-mask"));
@@ -160,6 +163,39 @@
         styles.push(`background-image:url(${background})`);
         styles.push("background-size:100% 100%");
       }
+    }
+
+    _buildTitles() {
+      const slides = Array.from(this.querySelectorAll("kwc-article-slide"));
+      const titles = {};
+      let previousHeaders = [];
+      slides.forEach((slide) => {
+        const currentHeaders = [];
+        let hasPreviousTitle = false;
+        for (let i = 0; i < 10; i++) {
+          const attr = `h${i + 1}`;
+          if (slide.hasAttribute(attr)) {
+            const header = slide.getAttribute(attr);
+            hasPreviousTitle = true;
+            if (header === "_none_") {
+              break;
+            } else {
+              currentHeaders[i] = header;
+            }
+          } else if (hasPreviousTitle) {
+            break;
+          } else {
+            if (previousHeaders.length <= i) {
+              break;
+            } else {
+              currentHeaders[i] = previousHeaders[i];
+            }
+          }
+        }
+        titles[slide.getAttribute("name")] = currentHeaders;
+        previousHeaders = currentHeaders;
+      });
+      this._titles = titles;
     }
 
     _previousTap(e) {
@@ -359,6 +395,13 @@
         }
       });
       this.partRelated = this._currentSlide && this._currentSlide.hasAttribute("part");
+      this._updateTitlesOnMasks();
+    }
+
+    _updateTitlesOnMasks() {
+      if (this._titles) {
+        Array.from(this.querySelectorAll("kwc-article-slide-mask")).forEach(m => m.breadcrumb = this._titles[this.slide]);
+      }
     }
 
     get _currentSlide() {
