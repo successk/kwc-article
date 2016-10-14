@@ -277,16 +277,26 @@
           if (this.hideMouseInterval) {
             clearTimeout(this.hideMouseInterval);
           }
-          this.hideMouseInterval = setTimeout(() => {
-            this.classList.add("hide-actions");
+          if (!this._isParentNode(e.target, this.$.actions)) {
+            this.hideMouseInterval = setTimeout(() => {
+              this.classList.add("hide-actions");
 
-            // Enable keyboard inputs after a focused button is hidden.
-            if (this.$.inputSlideIndex !== document.activeElement) {
-              this.$.slidesContainer.focus();
-            }
-          }, 2500);
+              // Enable keyboard inputs after a focused button is hidden.
+              if (this.$.inputSlideIndex !== document.activeElement) {
+                this.$.slidesContainer.focus();
+              }
+            }, 2500);
+          }
         }
       }
+    }
+
+    _isParentNode(child, parent) {
+      let current = child;
+      while (current && current !== parent) {
+        current = current.parentNode;
+      }
+      return !!(current && current === parent);
     }
 
     _previous() {
