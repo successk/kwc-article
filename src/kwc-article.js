@@ -11,6 +11,7 @@
     attachedCallback() {
       this.buildSummary();
       this.buildGlossary();
+      this.buildReferences();
     }
 
     buildSummary() {
@@ -72,6 +73,19 @@
           html = html.replace(new RegExp(def.dt, "gi"), (dt) => `<kwc-article-tooltip description="${description}">${dt}</kwc-article-tooltip>`);
         });
         node.innerHTML = html;
+      }
+    }
+
+    buildReferences() {
+      const ref = this.querySelector("kwc-article-ref");
+      if (ref) {
+        ref.addEventListener("attached", (e) => {
+          ref.references.forEach((ref) => {
+            Array.from(Polymer.dom(this).querySelectorAll(`*[data-kwc-article-ref="${ref.name}"]`)).forEach((elt) => {
+              elt.innerHTML = `<kwc-article-tooltip description="${ref.description}"><a href="${ref.link}" target="_blank">${ref.ref}</a></kwc-article-tooltip>`
+            });
+          });
+        });
       }
     }
   }

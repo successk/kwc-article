@@ -17,6 +17,18 @@
     kwc-article-glossary dl dt {
       font-weight: bold;
     }
+
+    kwc-article-ref dl dt {
+      font-weight: bold;
+    }
+
+    kwc-article-ref a:before {
+      content: "🌐";
+    }
+
+    kwc-article-ref a {
+      text-decoration: none;
+    }
   </style>
 </head>
 
@@ -68,6 +80,10 @@
           Nullam tincidunt mauris sit amet diam dictum lobortis.
           Ut semper sollicitudin arcu eu rutrum.
           Nunc gravida condimentum augue, laoreet sagittis libero.
+        </p>
+
+        <p>
+          Access to <span data-kwc-article-ref="lorem-ipsum"></span>.
         </p>
 
         <h3>Vivamus malesuada odio turpis</h3>
@@ -129,6 +145,14 @@
           Donec lacus lorem, dapibus bibendum luctus a, posuere non eros.
         </p>
       </section>
+
+      <kwc-article-ref>
+        <dl>
+          <dt data-kwc-article-ref-name="lorem-ipsum">Lorem ipsum</dt>
+          <dd><a href="http://lipsum.com/">http://lipsum.com/</a></dd>
+          <dd>Lorem Ipsum is simply dummy text of the printing and typesetting industry</dd>
+        </dl>
+      </kwc-article-ref>
 
       <kwc-article-slides start="welcome" background="background.png" full-background="#000" hide-slide-number>
         <kwc-article-slide-mask location="top" breadcrumb-separator=" &gt; ">
