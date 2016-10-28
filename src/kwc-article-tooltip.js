@@ -13,6 +13,11 @@
         margin: {
           type: Number,
           value: 5
+        },
+        htmlDescription: {
+          type: String,
+          computed: "_computeHtmlDescription(description)",
+          observer: "_htmlDescriptionChanged"
         }
       };
     }
@@ -35,6 +40,16 @@
       this.addEventListener("mouseout", () => {
         this.$.description.style.display = "none";
       });
+    }
+
+    _computeHtmlDescription(description) {
+      let text = description.replace(/[\u00A0-\u9999<>\&]/gi, (c) => `&#'${c.charCodeAt(0)}`);
+      text = text.replace("\n", "<br/>");
+      return text;
+    }
+
+    _htmlDescriptionChanged(description) {
+      this.querySelector("#description").innerHTML = description;
     }
   }
 
