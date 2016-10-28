@@ -9,6 +9,11 @@
     }
 
     attachedCallback() {
+      this.buildSummary();
+      this.buildGlossary();
+    }
+
+    buildSummary() {
       const summary = this.querySelector("kwc-article-summary");
       if (summary) {
         const titleNodes = Array.from(this.querySelectorAll(".kwc-article-text h2, .kwc-article-text h3, .kwc-article-text h4, .kwc-article-text h5, .kwc-article-text h6"));
@@ -42,6 +47,31 @@
         });
 
         summary.setAttribute("items", JSON.stringify(summaryItems));
+      }
+    }
+
+    buildGlossary() {
+      const glossary = this.querySelector("kwc-article-glossary");
+      if (glossary) {
+        glossary.addEventListener("attached", (e) => {
+          const definitions = glossary.definitions;
+          const text = Polymer.dom(this).querySelector(".kwc-article-text");
+          this.insertGlossaryInText(text, definitions);
+        });
+      }
+    }
+
+    insertGlossaryInText(node, definitions) {
+      // Transform only final nodes to avoid replacing attributes or whatever
+      if (node.children.length > 0) {
+        Array.from(node.children).forEach((n) => this.insertGlossaryInText(n, definitions));
+      } else {
+        let html = node.innerHTML;
+        definitions.forEach((def) => {
+          const description = def.dd.join("\n");
+          html = html.replace(new RegExp(def.dt, "gi"), (dt) => `<kwc-article-tooltip description="${description}">${dt}</kwc-article-tooltip>`);
+        });
+        node.innerHTML = html;
       }
     }
   }
